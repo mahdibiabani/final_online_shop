@@ -27,7 +27,7 @@
             {% endif %}
             <div id="content" class="col-sm-12">
                 <h2 class="title">Register Account</h2>
-                <p>If you already have an account with us, please login at the <a href="#">login page</a>.</p>
+                <p>If you already have an account with us, please login at the <a href="{% url 'accounts:login' %}">login page</a>.</p>
                 <form action="" method="post" enctype="multipart/form-data"
                       class="form-horizontal account-register clearfix">
                     {% csrf_token %}

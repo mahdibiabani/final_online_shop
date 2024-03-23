@@ -541,8 +541,12 @@
                     <div class="middle-right col-lg-4 col-md-3 col-sm-6 col-xs-8">
                         <div class="signin-w  hidden-sm hidden-xs">
                             <ul class="signin-link blank">
-                                <li class="log login"><i class="fa fa-lock"></i> <a class="link-lg" href="login.html">Login </a>
-                                    or <a href="register.html">Register</a></li>
+                                {% if request.user.is_authenticated %}
+                                <li class="log login"> <a href="{% url 'accounts:logout' %}">Logout</a>  </li>
+                                {% else %}
+                                <li class="log login"><i class="fa fa-lock"></i> <a class="link-lg" href="{% url 'accounts:login' %}">Login </a>
+                                    or <a href="{% url 'accounts:signup' %}">Register</a>  </li>
+                                {% endif %}
                             </ul>
                         </div>
                         <div class="telephone hidden-xs hidden-sm hidden-md">

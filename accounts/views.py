@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from accounts.forms import UserRegisterForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.conf import settings
 
@@ -46,6 +46,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, f"you are logged in as {user.username}")
+
             return redirect("pages:home")
         else:
             messages.warning(request, f"user does not exist")
@@ -53,3 +54,10 @@ def login_view(request):
     context = {
     }
     return render(request, 'accounts/login.html', context)
+
+
+def logout_view(request):
+    messages.success(request, f"You are logged out")
+    logout(request)
+    return redirect('accounts:login')
+
