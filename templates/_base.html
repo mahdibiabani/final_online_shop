@@ -46,6 +46,7 @@
     <link href="{% static 'css/header/header1.css' %}" rel="stylesheet">
     <link id="color_scheme" href="{% static 'css/theme.css' %}" rel="stylesheet">
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- Google web fonts
    ============================================ -->
@@ -542,7 +543,7 @@
                         <div class="signin-w  hidden-sm hidden-xs">
                             <ul class="signin-link blank">
                                 {% if request.user.is_authenticated %}
-                                <li class="log login"> <a href="{% url 'accounts:logout' %}">Logout</a>  </li>
+                                <li class="log login"> <a href="{% url 'accounts:logout' %}">Logout</a> |  <a href="#">My Account</a> </li>
                                 {% else %}
                                 <li class="log login"><i class="fa fa-lock"></i> <a class="link-lg" href="{% url 'accounts:login' %}">Login </a>
                                     or <a href="{% url 'accounts:signup' %}">Register</a>  </li>
@@ -560,7 +561,18 @@
                     </div>
 
                 </div>
-
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <strong>{{ message }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <script>
+                    setTimeout(() => {
+                        $(".alert").alert("close")
+                    },3000)
+                </script>
             </div>
         </div>
         <!-- //Header center -->
