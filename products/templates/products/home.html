@@ -1352,18 +1352,18 @@
 
                                         <div class="ltabs-items-inner ltabs-slider">
                                             <!-- item listing tab -->
-                                            <div class="ltabs-item">
-                                                <div class="item-inner product-layout transition product-grid">
-                                                    {% for product in products  %}
+                                            {% for product in products %}
+                                                <div class="ltabs-item">
+                                                    <div class="item-inner product-layout transition product-grid">
                                                         <div class="product-item-container">
                                                             <div class="left-block">
                                                                 <div class="product-image-container second_img">
                                                                     <a href="product.html" target="_self"
                                                                        title="Pastrami bacon">
-                                                                        <img src="{% static 'image/catalog/demo/product/270/1.jpg' %}"
+                                                                        <img src="{{ product.image.url }}"
                                                                              class="img-1 img-responsive"
                                                                              alt="Pastrami bacon">
-                                                                        <img src="{% static 'image/catalog/demo/product/270/12.jpg' %}"
+                                                                        <img src="{{ product.image.url }}"
                                                                              class="img-2 img-responsive"
                                                                              alt="Pastrami bacon">
                                                                     </a>
@@ -1408,14 +1408,14 @@
                                                                                 class="fa fa-star-o fa-stack-2x"></i></span>
                                                                     </div>
                                                                     <h4><a href="product.html" title="Pastrami bacon"
-                                                                           target="_self">Pastrami bacon</a></h4>
-                                                                    <div class="price">$42.00</div>
+                                                                           target="_self">{{ product.title }}</a></h4>
+                                                                    <div class="price">${{ product.price }}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    {% endfor %}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
 
 
