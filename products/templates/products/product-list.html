@@ -297,7 +297,7 @@
                                     <div class="product-item-container">
                                         <div class="left-block">
                                             <div class="product-image-container second_img">
-                                                <a href="product.html" target="_self" title="Chicken swinesha">
+                                                <a href="{{ product.get_absolute_url }}" target="_self" title="{{ product.title }}">
                                                     <img src="{{ product.image.url }}" class="img-1 img-responsive"
                                                          alt="image">
                                                     <img src="{{ product.image.url }}" class="img-2 img-responsive"

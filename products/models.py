@@ -1,5 +1,5 @@
 import string
-
+from django.urls import reverse
 from django.db import models
 from django.db.models import ForeignKey
 from shortuuid.django_fields import ShortUUIDField
@@ -94,6 +94,9 @@ class Product(models.Model):
     sku = ShortUUIDField(unique=True, length=4, max_length=10, prefix="sku", alphabet="1234567890")
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse('products:product_detail', args=[self.pid])
 
     class Meta:
         verbose_name_plural = "Products"
