@@ -5,6 +5,7 @@ from django.db.models import ForeignKey
 from shortuuid.django_fields import ShortUUIDField
 from django.utils.html import mark_safe
 from taggit.managers import TaggableManager
+from ckeditor_uploader.fields import RichTextUploadingField
 
 from accounts.models import User
 
@@ -59,7 +60,8 @@ class Vendor(models.Model):
     vid = ShortUUIDField(unique=True, length=10, max_length=20, prefix="vid", alphabet="abcdefg12345")
     title = models.CharField(max_length=100, default="Vendor Title")
     image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
-    description = models.TextField(null=True, blank=True, default="Vendor Description")
+    # description = models.TextField(null=True, blank=True, default="Vendor Description")
+    description = RichTextUploadingField(null=True, blank=True, default="Vendor Description")
 
     address = models.CharField(max_length=100, default=" 123 Main Street")
     contact = models.CharField(max_length=100, default=" +123 (456) 789")
@@ -79,13 +81,15 @@ class Product(models.Model):
 
     title = models.CharField(max_length=100, default=" Product Title")
     image = models.ImageField(upload_to=user_directory_path, default="product.jpg")
-    description = models.TextField(null=True, blank=True, default=" Product Description")
+    # description = models.TextField(null=True, blank=True, default=" Product Description")
+    description = RichTextUploadingField(null=True, blank=True, default=" Product Description")
 
     price = models.DecimalField(max_digits=10, decimal_places=2, default="1.99")
     old_price = models.DecimalField(max_digits=10, decimal_places=2, default="2.99")
 
-    specifications = models.TextField(null=True, blank=True)
-    # tags = ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
+    # specifications = models.TextField(null=True, blank=True)
+    specifications = RichTextUploadingField(null=True, blank=True)
+
     product_status = models.CharField(choices=STATUS, max_length=10, default="in_review")
 
     status = models.BooleanField(default=True)
