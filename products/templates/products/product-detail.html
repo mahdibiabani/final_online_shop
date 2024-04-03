@@ -67,9 +67,9 @@
                                             <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                         </div>
                                     </div>
-
+                                    <a class="reviews_button"> {{ average_rating.rating|floatformat }} out of 5</a> |
                                     <a class="reviews_button" href=""
-                                       onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">0
+                                       onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews.count }}
                                         reviews</a> |
                                     <a class="write_review_button" href=""
                                        onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Write a
@@ -198,7 +198,8 @@
                     <div class="tabsslider horizontal-tabs  col-xs-12">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Description</a></li>
-                            <li class="item_nonactive"><a data-toggle="tab" href="#tab-review">Reviews (1)</a></li>
+                            <li class="item_nonactive"><a data-toggle="tab" href="#tab-review">Reviews
+                                ({{ reviews.count }})</a></li>
                             <li class="item_nonactive"><a data-toggle="tab" href="#tab-4">Tags</a></li>
                             <li class="item_nonactive"><a data-toggle="tab" href="#tab-5">Custom Tab</a></li>
                         </ul>
@@ -207,7 +208,7 @@
                                 <p>
                                     {{ product.description|safe }}
                                 </p>
-                             
+
                                 <!-- <p>
                                     <b>Resolutions</b></p>
                                 <ul>
@@ -395,71 +396,52 @@
 
                             </div>
                             <div id="tab-review" class="tab-pane fade">
-                                <form>
-                                    <div id="review">
-                                        <table class="table table-striped table-bordered">
-                                            <tbody>
-                                            <tr>
-                                                <td style="width: 50%;"><strong>Super Administrator</strong></td>
-                                                <td class="text-right">29/07/2015</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <p>Best this product opencart</p>
-                                                    <div class="ratings">
-                                                        <div class="rating-box">
+                                <form action="{% url 'products:comment_create' product.id %}"
+                                      method="POST">
+                                    {% csrf_token %}
+                                    {% for review in reviews %}
+                                        <div id="review">
+                                            <table class="table table-striped table-bordered">
+                                                <tbody>
+                                                <tr>
+                                                    <td style="width: 50%;">
+                                                        <strong>{{ review.user.username|title }}</strong></td>
+                                                    <td class="text-right">{{ review.date_created|date:"d M,Y" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <p>{{ review.review }}</p>
+                                                        <div class="ratings">
+                                                            <div class="rating-box">
                                                             <span class="fa fa-stack"><i
                                                                     class="fa fa-star fa-stack-1x"></i><i
                                                                     class="fa fa-star-o fa-stack-1x"></i></span>
-                                                            <span class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-1x"></i><i
-                                                                    class="fa fa-star-o fa-stack-1x"></i></span>
-                                                            <span class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-1x"></i><i
-                                                                    class="fa fa-star-o fa-stack-1x"></i></span>
-                                                            <span class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-1x"></i><i
-                                                                    class="fa fa-star-o fa-stack-1x"></i></span>
-                                                            <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o fa-stack-1x"></i></span>
+                                                                <span class="fa fa-stack"><i
+                                                                        class="fa fa-star fa-stack-1x"></i><i
+                                                                        class="fa fa-star-o fa-stack-1x"></i></span>
+                                                                <span class="fa fa-stack"><i
+                                                                        class="fa fa-star fa-stack-1x"></i><i
+                                                                        class="fa fa-star-o fa-stack-1x"></i></span>
+                                                                <span class="fa fa-stack"><i
+                                                                        class="fa fa-star fa-stack-1x"></i><i
+                                                                        class="fa fa-star-o fa-stack-1x"></i></span>
+                                                                <span class="fa fa-stack"><i
+                                                                        class="fa fa-star-o fa-stack-1x"></i></span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <div class="text-right"></div>
-                                    </div>
-                                    <h2 id="review-title">Write a review</h2>
-                                    <div class="contacts-form">
-                                        <div class="form-group"><span class="icon icon-user"></span>
-                                            <input type="text" name="name" class="form-control" value="Your Name"
-                                                   onblur="if (this.value == '') {this.value = 'Your Name';}"
-                                                   onfocus="if(this.value == 'Your Name') {this.value = '';}">
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-right"></div>
                                         </div>
-                                        <div class="form-group"><span class="icon icon-bubbles-2"></span>
-                                            <textarea class="form-control" name="text"
-                                                      onblur="if (this.value == '') {this.value = 'Your Review';}"
-                                                      onfocus="if(this.value == 'Your Review') {this.value = '';}">Your Review</textarea>
-                                        </div>
-                                        <span style="font-size: 11px;"><span class="text-danger">Note:</span>						HTML is not translated!</span>
-
-                                        <div class="form-group">
-                                            <b>Rating</b> <span>Bad</span>&nbsp;
-                                            <input type="radio" name="rating" value="1"> &nbsp;
-                                            <input type="radio" name="rating"
-                                                   value="2"> &nbsp;
-                                            <input type="radio" name="rating"
-                                                   value="3"> &nbsp;
-                                            <input type="radio" name="rating"
-                                                   value="4"> &nbsp;
-                                            <input type="radio" name="rating"
-                                                   value="5"> &nbsp;<span>Good</span>
-
-                                        </div>
-                                        <div class="buttons clearfix"><a id="button-review" class="btn buttonGray">Continue</a>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
+                                    <h2 id=" review-title">Write a review</h2>
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+                                        {{ review_form }}
+                                        <input type="submit" value="submit">
+                                    </form>
                                 </form>
                             </div>
                             <div id="tab-4" class="tab-pane fade">

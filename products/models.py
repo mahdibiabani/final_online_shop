@@ -158,8 +158,8 @@ class CartOrderItems(models.Model):
 
 
 class ProductReview(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="reviews")
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name="reviews")
     review = models.TextField()
     rating = models.IntegerField(choices=RATING, default=None)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -172,6 +172,9 @@ class ProductReview(models.Model):
 
     def get_rating(self):
         return self.rating
+
+    def get_absolute_url(self):
+        return reverse('products:product_detail', args=[self.product.pid])
 
 
 class WishList(models.Model):
